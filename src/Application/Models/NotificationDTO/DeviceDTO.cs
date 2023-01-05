@@ -14,12 +14,7 @@ namespace Tawala.Application.Models.NotificationDTO
         public string UserId { get; set; }
         public string DeviceToken { get; set; }
     }
-    public class DeviceUpdateDTO : IMapFrom<Device>
-    {
-        public Guid Id { get; set; }
-        public string UserId { get; set; }
-        public string DeviceToken { get; set; }
-    }
+
     public class DeviceResDTO : IMapFrom<Device>
     {
         public Guid Id { get; set; }

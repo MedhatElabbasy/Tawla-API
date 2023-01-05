@@ -10,6 +10,8 @@ using Tawala.Domain.Entities.Identity;
 using Tawala.Domain.Entities;
 using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 using Tawala.Domain.Entities.Settings;
+using Tawala.Domain.Entities.Notifications;
+using Tawala.Domain.Entities.Category;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -34,6 +36,11 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<OptionSetItem> OptionSetItem { get; set; }
         public DbSet<OptionSet> OptionSet { get; set; }
         public DbSet<Settings> Settings { get; set; }
+
+        //-----------------Admin
+        public DbSet<AdminNotifications> AdminNotifications { get; set; }
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Device> Device { get; set; }
 
         //------------------
 
