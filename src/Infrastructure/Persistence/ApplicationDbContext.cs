@@ -12,6 +12,7 @@ using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 using Tawala.Domain.Entities.Settings;
 using Tawala.Domain.Entities.Notifications;
 using Tawala.Domain.Entities.Category;
+using Tawala.Domain.Entities.Settings.AdminSettings;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -31,7 +32,7 @@ namespace Tawala.Infrastructure.Persistence
             _dateTime = dateTime;
         }
 
-         
+
         public DbSet<AppAttachment> AppAttachment { get; set; }
         public DbSet<OptionSetItem> OptionSetItem { get; set; }
         public DbSet<OptionSet> OptionSet { get; set; }
@@ -41,6 +42,9 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<AdminNotifications> AdminNotifications { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<Device> Device { get; set; }
+        public DbSet<Regions> Regions { get; set; }
+        public DbSet<City> City { get; set; }
+        public DbSet<District> District { get; set; }
 
         //------------------
 
