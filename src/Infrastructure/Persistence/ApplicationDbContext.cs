@@ -45,6 +45,8 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<Regions> Regions { get; set; }
         public DbSet<City> City { get; set; }
         public DbSet<District> District { get; set; }
+        public DbSet<OptionSet> OptionSets { get; set; }
+        public DbSet<OptionSetItem> OptionSetItems { get; set; }
 
         //------------------
 

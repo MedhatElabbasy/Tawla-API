@@ -14,8 +14,7 @@ namespace Tawala.WebUI.Controllers.Admin
 {
     public class CityController : ApiControllerBase
     {
-        private readonly ApplicationDbContext context;
-        private readonly IEncryptDecryptService encryptDecryptService;
+        private readonly ApplicationDbContext context; 
         private readonly IMapper mapper;
         public CityController(ApplicationDbContext context, IMapper mapper)
         {
