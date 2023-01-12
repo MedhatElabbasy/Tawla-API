@@ -13,6 +13,8 @@ using Tawala.Domain.Entities.Settings;
 using Tawala.Domain.Entities.Notifications;
 using Tawala.Domain.Entities.Category;
 using Tawala.Domain.Entities.Settings.AdminSettings;
+using Tawala.Domain.Entities.Settings.ServiceProvider;
+using Tawala.Domain.Entities.Settings.Other;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -49,6 +51,11 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<OptionSetItem> OptionSetItems { get; set; }
 
         //------------------
+        public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Branch> Branchs { get; set; }
+        public DbSet<OpenDayes> OpenDayes { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
+        public DbSet<Complain> Complains { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
