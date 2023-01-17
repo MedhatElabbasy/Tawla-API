@@ -31,7 +31,7 @@ namespace Tawala.WebUI.Controllers.OtherController
             var res = mapper.Map<ContactUsResDTO>(context.ContactUs.Add(mapper.Map<ContactUs>(model)).Entity);
             context.SaveChanges();
             return res;
-        }
+        } 
 
         [HttpPost]
         [Route("Update")]
