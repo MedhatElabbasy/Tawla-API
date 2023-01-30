@@ -20,6 +20,8 @@ namespace Tawala.Domain.Entities.Settings.ServiceProvider
         public bool IsActive { get; set; }
         public bool IsDeleted { get; set; }
         public string Notes { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PhoneNumber2 { get; set; } 
         public Guid? RestaurantId { get; set; }
         public Restaurant Restaurant { get; set; }
     }
