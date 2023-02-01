@@ -132,7 +132,7 @@ namespace Tawala.WebUI.Controllers.Auth
 
         [HttpPost]
         [Route("ForgetPassword")]
-        public async Task<string> ForgetPassword(string userName)
+        public async Task<ActionResult> ForgetPassword(string userName)
         {
             var user = await identityService.GetUserByUserNameAsync(userName);
             if (user == null)
@@ -160,7 +160,7 @@ namespace Tawala.WebUI.Controllers.Auth
 
                 }
                 //  return code2;
-                return "تم ارسال الرابط علي الميل بنجاح";
+                return Ok(new { message = "تم ارسال الرابط علي الميل بنجاح" });
             }
         }
 
