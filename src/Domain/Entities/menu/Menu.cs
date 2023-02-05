@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tawala.Domain.Common;
 using Tawala.Domain.Entities.Settings;
 using Tawala.Domain.Entities.Settings.ServiceProvider;
+using Tawala.Domain.Entities.TawalhDesignWithConfig;
 
 namespace Tawala.Domain.Entities.menu
 {
@@ -22,5 +23,6 @@ namespace Tawala.Domain.Entities.menu
         public bool IsActive { get; set; }
         public Guid? AppAttachmentId { get; set; }
         public AppAttachment AppAttachment { get; set; }
+        public virtual IList<MenuItems> MenuItems { get; set; } = new List<MenuItems>();
     }
 }

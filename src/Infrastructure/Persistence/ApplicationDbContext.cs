@@ -10,11 +10,12 @@ using Tawala.Domain.Entities.Identity;
 using Tawala.Domain.Entities;
 using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 using Tawala.Domain.Entities.Settings;
-using Tawala.Domain.Entities.Notifications;
-using Tawala.Domain.Entities.Category;
+using Tawala.Domain.Entities.Notifications; 
 using Tawala.Domain.Entities.Settings.AdminSettings;
 using Tawala.Domain.Entities.Settings.ServiceProvider;
 using Tawala.Domain.Entities.Settings.Other;
+using Tawala.Domain.Entities.menu;
+using Tawala.Domain.Entities.CategoryEni;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -56,6 +57,10 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<OpenDayes> OpenDayes { get; set; }
         public DbSet<ContactUs> ContactUs { get; set; }
         public DbSet<Complain> Complains { get; set; }
+        //---------------menu
+        public DbSet<Items> Items { get; set; }
+        public DbSet<Menu> Menus { get; set; }
+        public DbSet<MenuItems> MenuItems { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
