@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tawala.Application.Common.Mappings;
 using Tawala.Application.Models.Common;
-using Tawala.Domain.Entities.Category;
+using Tawala.Domain.Entities.CategoryEni;
 using Tawala.Domain.Entities.Settings;
 
 namespace Tawala.Application.Models.CategoryDTO

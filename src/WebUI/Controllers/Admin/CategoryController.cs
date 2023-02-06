@@ -8,9 +8,9 @@ using Tawala.Application.Models.NotificationDTO;
 using Tawala.Domain.Entities.Notifications;
 using Tawala.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Tawala.Application.Models.CategoryDTO;
-using Tawala.Domain.Entities.Category;
+using Tawala.Application.Models.CategoryDTO; 
 using System.Linq;
+using Tawala.Domain.Entities.CategoryEni;
 
 namespace Tawala.WebUI.Controllers.Admin
 {

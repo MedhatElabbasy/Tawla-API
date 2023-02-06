@@ -23,7 +23,7 @@ namespace Tawala.Application.Models.MyAppUserDTO
         public bool IsAdmin { get; set; }
         public bool IsUser { get; set; }
         public string Email { get; set; }
-        public string UserName { get; set; }
+       // public string UserName { get; set; }
         public string PhoneNumer { get; set; }
         public string Password { get; set; }
         public Guid? PhotoId { get; set; }

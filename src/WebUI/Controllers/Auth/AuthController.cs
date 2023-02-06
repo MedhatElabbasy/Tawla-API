@@ -59,7 +59,7 @@ namespace Tawala.WebUI.Controllers.Auth
         public async Task<AppUserDTO> RegisterAdmin(AppUserDTO model)
         {
             //check if user is found
-            var user = await identityService.GetUserByUserNameAsync(model.UserName);
+            var user = await identityService.GetUserByUserNameAsync(model.Email);
             if (user == null)
             {
                 //create new User
@@ -68,7 +68,7 @@ namespace Tawala.WebUI.Controllers.Auth
                 if (result.Succeeded)
                 {
 
-                    var createdUser = await identityService.GetUserByUserNameAsync(model.UserName);
+                    var createdUser = await identityService.GetUserByUserNameAsync(model.Email);
 
                     return mapper.Map<AppUserDTO>(createdUser);
                 }
