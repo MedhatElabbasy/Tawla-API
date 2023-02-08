@@ -15,7 +15,7 @@ namespace Tawala.Domain.Entities.TawalhDesignWithConfig
         public bool IsDeleted { get; set; }
         public string Name { get; set; }
         public string NameEn { get; set; }
-        public Room RoomId { get; set; }
+        public Guid? RoomId { get; set; }
         public Room Room { get; set; }
         //Position
         public decimal PositionLeft { get; set; }
