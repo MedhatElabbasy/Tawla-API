@@ -63,7 +63,9 @@ namespace Tawala.WebUI.Controllers.Auth
             if (user == null)
             {
                 //create new User
+                
                 var newUser = mapper.Map<AppUser>(model);
+                newUser.UserName = model.Email;
                 var result = await _userManager.CreateAsync(newUser, model.Password);
                 if (result.Succeeded)
                 {
