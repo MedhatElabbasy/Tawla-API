@@ -58,7 +58,7 @@ namespace Tawala.Application.Models.TawalhDesignWithConfigDTO
     }
     public class RoomTableUpdateDTO : IMapFrom<RoomTable>
     {
-
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string NameEn { get; set; }
         public Guid? RoomId { get; set; }
