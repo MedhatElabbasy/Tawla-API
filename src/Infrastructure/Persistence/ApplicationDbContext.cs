@@ -17,6 +17,7 @@ using Tawala.Domain.Entities.Settings.Other;
 using Tawala.Domain.Entities.menu;
 using Tawala.Domain.Entities.CategoryEni;
 using Tawala.Domain.Entities.TawalhDesignWithConfig;
+using Tawala.Domain.Entities.Reservations;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -67,6 +68,9 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Floor> Floors { get; set; }
         public DbSet<RoomTable> RoomTables { get; set; }
+        public DbSet<RestOccasions> RestOccasions { get; set; }
+        public DbSet<OccasionsReservation> OccasionsReservation { get; set; }
+
 
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
