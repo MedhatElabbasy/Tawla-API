@@ -108,7 +108,7 @@ namespace Tawala.WebUI.Controllers.Reservations
                 Include(x => x.Branch).
                 Include(x => x.Status).
                 Include(x => x.RestOccasions).ThenInclude(x => x.Restaurant).ThenInclude(x => x.Logo).
-                ToListAsync();
+                FirstOrDefaultAsync();
             return mapper.Map<OccasionsReservationResDTO>(res);
         }
     }

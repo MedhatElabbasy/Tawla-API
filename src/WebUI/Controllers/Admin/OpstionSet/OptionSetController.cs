@@ -70,6 +70,18 @@ namespace Tawala.WebUI.Controllers.Admin.OpstionSet
         }
 
         [HttpGet]
+        [Route("GetAllByNames")]
+        public async Task<List<OptionSetResDTO>> GetAllByNames(List<string> Names)
+        {
+            var res = await context.OptionSet.
+                Where(x => x.IsDeleted == false && Names.Contains(x.Name)).
+                Include(x => x.OptionSetItems.Where(x => x.IsDeleted == false)).
+                ToListAsync();
+
+            return mapper.Map<List<OptionSetResDTO>>(res);
+        }
+
+        [HttpGet]
         [Route("GetById")]
         public async Task<OptionSetResDTO> GetById(Guid Id)
         {
@@ -79,6 +91,6 @@ namespace Tawala.WebUI.Controllers.Admin.OpstionSet
                 FirstOrDefaultAsync();
 
             return mapper.Map<OptionSetResDTO>(res);
-        } 
+        }
     }
 }

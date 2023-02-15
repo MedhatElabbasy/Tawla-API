@@ -14,7 +14,6 @@ namespace Tawala.WebUI.Controllers.Reservations
     public class RestOccasionsController : ApiControllerBase
     {
         private readonly ApplicationDbContext context;
-
         private readonly IMapper mapper;
         public RestOccasionsController(ApplicationDbContext context, IMapper mapper)
         {
@@ -119,7 +118,7 @@ namespace Tawala.WebUI.Controllers.Reservations
         {
             var res = await context.RestOccasions.
                 Where(x => x.IsDeleted == false && x.Id == Id).
-                ToListAsync();
+                FirstOrDefaultAsync();
             return mapper.Map<RestOccasionsResDTO>(res);
         }
     }

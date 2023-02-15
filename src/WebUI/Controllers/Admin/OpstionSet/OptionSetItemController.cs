@@ -70,6 +70,8 @@ namespace Tawala.WebUI.Controllers.Admin.OpstionSet
             return mapper.Map<List<OptionSetItemResDTO>>(res);
         }
 
+
+
         [HttpGet]
         [Route("GetById")]
         public async Task<OptionSetItemResDTO> GetById(Guid Id)
