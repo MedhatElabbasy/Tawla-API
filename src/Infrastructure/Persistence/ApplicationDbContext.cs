@@ -10,7 +10,7 @@ using Tawala.Domain.Entities.Identity;
 using Tawala.Domain.Entities;
 using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 using Tawala.Domain.Entities.Settings;
-using Tawala.Domain.Entities.Notifications; 
+using Tawala.Domain.Entities.Notifications;
 using Tawala.Domain.Entities.Settings.AdminSettings;
 using Tawala.Domain.Entities.Settings.ServiceProvider;
 using Tawala.Domain.Entities.Settings.Other;
@@ -70,6 +70,7 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<RoomTable> RoomTables { get; set; }
         public DbSet<RestOccasions> RestOccasions { get; set; }
         public DbSet<OccasionsReservation> OccasionsReservation { get; set; }
+        public DbSet<RestCommissionConfig> RestCommissionConfigs { get; set; }
 
 
 

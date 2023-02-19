@@ -119,7 +119,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.Branchs.
                 Where(x => x.IsDeleted == false && x.Id == Id).
-                ToListAsync();
+                FirstOrDefaultAsync();
             return mapper.Map<BranchResDTO>(res);
         }
     }
