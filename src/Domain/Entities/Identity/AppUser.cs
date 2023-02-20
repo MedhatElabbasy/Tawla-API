@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Tawala.Domain.Entities.Settings;
 using System;
 using System.Net.Mail;
+using Tawala.Domain.Entities.Settings.ServiceProvider;
 
 namespace Tawala.Domain.Entities.Identity
 {
@@ -24,5 +25,8 @@ namespace Tawala.Domain.Entities.Identity
         public string PhoneNumer { get; set; }
         public Guid? PhotoId { get; set; }
         public AppAttachment Photo { get; set; }
+        //---
+        public Guid? UserRestaurantId { get; set; }
+
     }
 }

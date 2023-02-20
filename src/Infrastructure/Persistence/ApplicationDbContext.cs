@@ -18,6 +18,7 @@ using Tawala.Domain.Entities.menu;
 using Tawala.Domain.Entities.CategoryEni;
 using Tawala.Domain.Entities.TawalhDesignWithConfig;
 using Tawala.Domain.Entities.Reservations;
+using System.Reflection.Emit;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -128,7 +129,7 @@ namespace Tawala.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);

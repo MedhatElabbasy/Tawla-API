@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tawala.Application.Common.Mappings;
+using Tawala.Application.Models.ServiceProviderDTO;
 using Tawala.Domain.Entities.Identity;
 using Tawala.Domain.Entities.Settings;
+using Tawala.Domain.Entities.Settings.ServiceProvider;
 
 namespace Tawala.Application.Models.MyAppUserDTO
 {
@@ -23,10 +25,11 @@ namespace Tawala.Application.Models.MyAppUserDTO
         public bool IsAdmin { get; set; }
         public bool IsUser { get; set; }
         public string Email { get; set; }
-       // public string UserName { get; set; }
+        // public string UserName { get; set; }
         public string PhoneNumer { get; set; }
         public string Password { get; set; }
         public Guid? PhotoId { get; set; }
+        public Guid? RestaurantId { get; set; }
 
     }
     public class AppUserResDTO : IMapFrom<AppUser>
@@ -49,6 +52,8 @@ namespace Tawala.Application.Models.MyAppUserDTO
         public string Password { get; set; }
         public Guid? PhotoId { get; set; }
         public AppAttachment Photo { get; set; }
+        public Guid? RestaurantId { get; set; }
+        public RestaurantResDTO Restaurant { get; set; }
 
     }
 }

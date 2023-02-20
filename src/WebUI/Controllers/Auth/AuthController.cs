@@ -63,7 +63,7 @@ namespace Tawala.WebUI.Controllers.Auth
             if (user == null)
             {
                 //create new User
-                
+
                 var newUser = mapper.Map<AppUser>(model);
                 newUser.UserName = model.Email;
                 var result = await _userManager.CreateAsync(newUser, model.Password);
@@ -101,7 +101,8 @@ namespace Tawala.WebUI.Controllers.Auth
                     return Ok(new
                     {
                         user = mapper.Map<AppUserResDTO>(user),
-                        token = token
+                        token = token,
+                        restaurant = await context.Restaurants.Where(x => x.Id == user.UserRestaurantId).FirstOrDefaultAsync(),
                     });
                 }
                 else
@@ -213,6 +214,26 @@ namespace Tawala.WebUI.Controllers.Auth
             //    throw new GlobalException(exMessage: RequestUtility.IsArabic ? "حدث خظأ" : "Error Ocared");
             //}
         }
+
+        [HttpPost]
+        [Route("UpdateUserRest")]
+        public async Task<AppUserResDTO> UpdateUserRest(string userId, Guid restId)
+        {
+            var user = await identityService.GetUserByUserNameAsync(userId);
+            user.UserRestaurantId = restId;
+
+            var res = context.Users.Update(user);
+            await context.SaveChangesAsync();
+            //if (res.Succeeded)
+            //{
+            return mapper.Map<AppUserResDTO>(user);
+            // }
+            //else
+            //{
+            //    throw new GlobalException(exMessage: RequestUtility.IsArabic ? "حدث خظأ" : "Error Ocared");
+            //}
+        }
+
 
 
         [HttpGet]
