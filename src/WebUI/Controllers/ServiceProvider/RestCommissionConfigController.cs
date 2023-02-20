@@ -124,6 +124,16 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
 
             return mapper.Map<RestCommissionConfigResDTO>(res);
         }
-    }
 
+        [HttpGet]
+        [Route("GetByRestId")]
+        public async Task<RestCommissionConfigResDTO> GetByRestId(Guid RestId)
+        {
+            var res = await context.RestCommissionConfigs
+                .Where(x => x.IsDeleted == false && x.RestaurantId == RestId)
+                .FirstOrDefaultAsync();
+
+            return mapper.Map<RestCommissionConfigResDTO>(res);
+        }
+    } 
 }
