@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tawala.Domain.Common;
 using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 
-namespace Tawala.Domain.Entities.Settings.Evaluation
+namespace Tawala.Domain.Entities.Settings.EvaluationEN
 {
     public class Evaluation : AuditableEntity, IEntityBase
     {

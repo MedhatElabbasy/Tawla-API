@@ -19,6 +19,7 @@ using Tawala.Domain.Entities.CategoryEni;
 using Tawala.Domain.Entities.TawalhDesignWithConfig;
 using Tawala.Domain.Entities.Reservations;
 using System.Reflection.Emit;
+using Tawala.Domain.Entities.Settings.EvaluationEN;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -72,6 +73,7 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<RestOccasions> RestOccasions { get; set; }
         public DbSet<OccasionsReservation> OccasionsReservation { get; set; }
         public DbSet<RestCommissionConfig> RestCommissionConfigs { get; set; }
+        public DbSet<Evaluation> Evaluations { get; set; }
 
 
 

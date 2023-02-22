@@ -10,6 +10,8 @@ using Tawala.Application.Models.OtherDTO;
 using Tawala.Domain.Entities.Settings.Other;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Newtonsoft.Json.Linq;
+using System.Xml.Linq;
 
 namespace Tawala.WebUI.Controllers.OtherController
 {
@@ -45,6 +47,21 @@ namespace Tawala.WebUI.Controllers.OtherController
             return mapper.Map<ComplainResDTO>(setting);
         }
 
+
+
+        [HttpPost]
+        [Route("UpdateStatus")]
+        public async Task<ComplainResDTO> UpdateStatus(Guid Id, int Value, string Name)
+        {
+            var model = await context.Complains
+                          .SingleOrDefaultAsync(s => s.Id == Id && s.IsDeleted == false);
+            var option = await context.OptionSetItems
+            .Where(x => x.OptionSet.Name == Name && x.Value == Value).FirstOrDefaultAsync();
+            model.ComplainStatusId = option.Id;
+            model = mapper.Map(model, model);
+            await context.SaveChangesAsync();
+            return mapper.Map<ComplainResDTO>(model);
+        }
 
         [HttpPost]
         [Route("Delete")]
