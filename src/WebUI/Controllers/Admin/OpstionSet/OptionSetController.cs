@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Tawala.Domain.Entities.Settings.OptionSetsEntities;
 using Microsoft.AspNetCore.Mvc;
+using Tawala.Application.Common.Exceptions;
+using Tawala.Infrastructure;
 
 namespace Tawala.WebUI.Controllers.Admin.OpstionSet
 {
@@ -23,18 +25,26 @@ namespace Tawala.WebUI.Controllers.Admin.OpstionSet
 
         [HttpPost]
         [Route("Add")]
-        public OptionSetResDTO Add(OptionSetAddDTO model)
+        public async Task<OptionSetResDTO> Add(OptionSetAddDTO model)
         {
-            var res = mapper.Map<OptionSetResDTO>(context.OptionSet.Add(mapper.Map<OptionSet>(model)).Entity);
-            context.SaveChanges();
-            return res;
+            var isExist = await context.OptionSet.Where(x => x.Name == model.Name).AnyAsync();
+            if (!isExist)
+            {
+                var res = mapper.Map<OptionSetResDTO>(context.OptionSet.Add(mapper.Map<OptionSet>(model)).Entity);
+                context.SaveChanges();
+                return res;
+            }
+            else
+            {
+                throw new GlobalException(exMessage: "الاسم مستخدم من قبل");
+            }
         }
 
         [HttpPost]
         [Route("Update")]
         public async Task<OptionSetResDTO> Update(OptionSetUpdateDTO model)
         {
-            var setting = await context.OptionSetItems
+            var setting = await context.OptionSet
                           .SingleOrDefaultAsync(s => s.Id == model.Id && s.IsDeleted == false);
 
             setting = mapper.Map(model, setting);
