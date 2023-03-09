@@ -81,5 +81,15 @@ namespace Tawala.WebUI.Controllers.Admin
             return mapper.Map<List<DistrictResDTO>>(res);
         }
 
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<DistrictResDTO> GetAll(Guid Id)
+        {
+            var res = await context.District.
+                Where(x => x.IsDeleted == false && x.Id == Id). 
+                FirstOrDefaultAsync();
+            return mapper.Map<DistrictResDTO>(res);
+        }
+
     }
 }
