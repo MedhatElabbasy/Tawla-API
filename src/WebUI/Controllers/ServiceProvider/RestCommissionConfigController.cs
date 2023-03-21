@@ -87,6 +87,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.RestCommissionConfigs
                 .Where(x => x.IsDeleted == false && x.IsActive == true)
+                 .Include(x => x.Restaurant).ThenInclude(x => x.Logo)
                 .ToListAsync();
 
             return mapper.Map<List<RestCommissionConfigResDTO>>(res);
@@ -98,6 +99,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.RestCommissionConfigs
                 .Where(x => x.IsDeleted == false && x.IsActive == false)
+                .Include(x => x.Restaurant).ThenInclude(x=>x.Logo)
                 .ToListAsync();
 
             return mapper.Map<List<RestCommissionConfigResDTO>>(res);
@@ -109,6 +111,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.RestCommissionConfigs
                 .Where(x => x.IsDeleted == false)
+                 .Include(x => x.Restaurant).ThenInclude(x => x.Logo)
                 .ToListAsync();
 
             return mapper.Map<List<RestCommissionConfigResDTO>>(res);
@@ -120,6 +123,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.RestCommissionConfigs
                 .Where(x => x.IsDeleted == false && x.Id == Id)
+                 .Include(x => x.Restaurant).ThenInclude(x => x.Logo)
                 .FirstOrDefaultAsync();
 
             return mapper.Map<RestCommissionConfigResDTO>(res);
@@ -131,6 +135,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.RestCommissionConfigs
                 .Where(x => x.IsDeleted == false && x.RestaurantId == RestId)
+                 .Include(x => x.Restaurant).ThenInclude(x => x.Logo)
                 .FirstOrDefaultAsync();
 
             return mapper.Map<RestCommissionConfigResDTO>(res);
