@@ -64,7 +64,9 @@ namespace Tawala.WebUI.Controllers.Admin.Notifications
         [Route("GetAll")]
         public async Task<List<AdminNotificationsResDTO>> GetAll()
         {
-            var res = await context.AdminNotifications.Where(x => x.IsDeleted == false).ToListAsync();
+            var res = await context.AdminNotifications.Where(x => x.IsDeleted == false).
+                Include(x => x.NotificationPhoto).
+                ToListAsync();
             return mapper.Map<List<AdminNotificationsResDTO>>(res);
         }
 
