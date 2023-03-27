@@ -8,7 +8,7 @@ using Tawala.Application.Models.NotificationDTO;
 using Tawala.Domain.Entities.Notifications;
 using Tawala.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Tawala.Application.Models.CategoryDTO; 
+using Tawala.Application.Models.CategoryDTO;
 using System.Linq;
 using Tawala.Domain.Entities.CategoryEni;
 
@@ -85,5 +85,18 @@ namespace Tawala.WebUI.Controllers.Admin
             return mapper.Map<List<CategoryResDTO>>(res);
         }
 
+
+
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<CategoryResDTO> GetById(Guid catId)
+        {
+            var res = await context.Category.
+                Where(x => x.IsDeleted == false && x.Id == catId).
+                Include(x => x.CategoryPhoto).
+                FirstOrDefaultAsync();
+
+            return mapper.Map<CategoryResDTO>(res);
+        } 
     }
 }

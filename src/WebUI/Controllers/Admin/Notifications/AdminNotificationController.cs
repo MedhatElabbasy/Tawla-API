@@ -70,5 +70,15 @@ namespace Tawala.WebUI.Controllers.Admin.Notifications
             return mapper.Map<List<AdminNotificationsResDTO>>(res);
         }
 
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<AdminNotificationsResDTO> GetById(Guid id)
+        {
+            var res = await context.AdminNotifications.Where(x => x.IsDeleted == false && x.Id == id).
+                Include(x => x.NotificationPhoto).
+                FirstOrDefaultAsync();
+            return mapper.Map<AdminNotificationsResDTO>(res);
+        }
+
     }
 }
