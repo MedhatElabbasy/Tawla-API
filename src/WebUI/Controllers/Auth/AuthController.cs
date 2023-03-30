@@ -219,7 +219,7 @@ namespace Tawala.WebUI.Controllers.Auth
         [Route("UpdateUserRest")]
         public async Task<AppUserResDTO> UpdateUserRest(string userId, Guid restId)
         {
-            var user = await identityService.GetUserByUserNameAsync(userId);
+            var user = await identityService.GetUserByIdAsync(userId);
             user.UserRestaurantId = restId;
 
             var res = context.Users.Update(user);
