@@ -73,8 +73,21 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.OpenDayes.
                 Where(x => x.IsDeleted == false && x.Id == Id).
-                ToListAsync();
+                FirstOrDefaultAsync();
             return mapper.Map<OpenDayesResDTO>(res);
+
+
+
+        }
+
+        [HttpGet]
+        [Route("GetByRestId")]
+        public async Task<List<OpenDayesResDTO>> GetByRestId(Guid Id)
+        {
+            var res = await context.OpenDayes.
+                Where(x => x.IsDeleted == false && x.RestaurantId == Id).
+                ToListAsync();
+            return mapper.Map<List<OpenDayesResDTO>>(res);
         }
     }
 }
