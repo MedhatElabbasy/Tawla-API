@@ -124,12 +124,12 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         }
         [HttpGet]
         [Route("GetByResId")]
-        public async Task<BranchResDTO> GetByResId(Guid RestId)
+        public async Task<List<BranchResDTO>> GetByResId(Guid RestId)
         {
             var res = await context.Branchs.
                 Where(x => x.IsDeleted == false && x.RestaurantId == RestId).
-                FirstOrDefaultAsync();
-            return mapper.Map<BranchResDTO>(res);
+                ToListAsync();
+            return mapper.Map<List<BranchResDTO>>(res);
         }
     }
 }
