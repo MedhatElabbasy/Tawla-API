@@ -86,9 +86,20 @@ namespace Tawala.WebUI.Controllers.Admin
         public async Task<DistrictResDTO> GetAll(Guid Id)
         {
             var res = await context.District.
-                Where(x => x.IsDeleted == false && x.Id == Id). 
+                Where(x => x.IsDeleted == false && x.Id == Id).
                 FirstOrDefaultAsync();
             return mapper.Map<DistrictResDTO>(res);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllByCityId")]
+        public async Task<List<DistrictResDTO>> GetAllByCityId(long Id)
+        {
+            var res = await context.District.
+                Where(x => x.IsDeleted == false && x.CityId == Id && x.IsActive == true).
+                ToListAsync();
+            return mapper.Map<List<DistrictResDTO>>(res);
         }
 
     }
