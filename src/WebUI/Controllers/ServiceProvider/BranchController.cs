@@ -109,6 +109,9 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.Branchs.
                 Where(x => x.IsDeleted == false).
+                  Include(x => x.City).
+                Include(x => x.District).
+                Include(x => x.Restaurant).
                 ToListAsync();
             return mapper.Map<List<BranchResDTO>>(res);
         }
@@ -119,6 +122,9 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.Branchs.
                 Where(x => x.IsDeleted == false && x.Id == Id).
+                  Include(x => x.City).
+                Include(x => x.District).
+                Include(x => x.Restaurant).
                 FirstOrDefaultAsync();
             return mapper.Map<BranchResDTO>(res);
         }
@@ -128,6 +134,9 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         {
             var res = await context.Branchs.
                 Where(x => x.IsDeleted == false && x.RestaurantId == RestId).
+                Include(x => x.City).
+                Include(x => x.District).
+                Include(x => x.Restaurant).
                 ToListAsync();
             return mapper.Map<List<BranchResDTO>>(res);
         }
