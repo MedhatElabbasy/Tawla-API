@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tawala.Application.Common.Mappings;
+using Tawala.Application.Models.Common;
 using Tawala.Application.Models.ServiceProviderDTO;
 using Tawala.Domain.Entities.Identity;
 using Tawala.Domain.Entities.Settings;
@@ -51,7 +52,7 @@ namespace Tawala.Application.Models.MyAppUserDTO
         public string PhoneNumer { get; set; }
         public string Password { get; set; }
         public Guid? PhotoId { get; set; }
-        public AppAttachment Photo { get; set; }
+        public AppAttachmentResDTO Photo { get; set; }
         public Guid? RestaurantId { get; set; }
         public RestaurantResDTO Restaurant { get; set; }
 

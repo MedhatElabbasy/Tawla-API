@@ -72,6 +72,7 @@ namespace Tawala.WebUI.Controllers.Auth
 
                     var createdUser = await identityService.GetUserByUserNameAsync(model.Email);
 
+           
                     return mapper.Map<AppUserDTO>(createdUser);
                 }
                 else
@@ -203,6 +204,7 @@ namespace Tawala.WebUI.Controllers.Auth
             user.IsUser = model.IsUser;
             user.IsRestAdmin = model.IsRestAdmin;
             user.IsRestUser = model.IsRestUser;
+            user.PhotoId = model.PhotoId;
             var res = context.Users.Update(user);
             await context.SaveChangesAsync();
             //if (res.Succeeded)
@@ -286,6 +288,20 @@ namespace Tawala.WebUI.Controllers.Auth
         }
 
 
+        [HttpGet]
+        [Route("GetById")]
+        public async Task<AppUserResDTO> GetById(Guid Id)
+        {
+
+            var res = await context.Users.Where(x => x.Id == Id.ToString()).
+                                    Include(x => x.Photo).
+                                    FirstOrDefaultAsync();
+
+            var photo = await context.AppAttachment.Where(x => x.Id == res.PhotoId).FirstOrDefaultAsync();
+            res.Photo = photo;
+
+            return mapper.Map<AppUserResDTO>(res);
+        }
 
     }
 }
