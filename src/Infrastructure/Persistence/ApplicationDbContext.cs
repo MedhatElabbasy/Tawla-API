@@ -74,6 +74,7 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<OccasionsReservation> OccasionsReservation { get; set; }
         public DbSet<RestCommissionConfig> RestCommissionConfigs { get; set; }
         public DbSet<Evaluation> Evaluations { get; set; }
+        public DbSet<ClientNotification> ClientNotifications { get; set; }
 
 
 

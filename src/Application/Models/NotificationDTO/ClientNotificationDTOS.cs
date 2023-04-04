@@ -23,6 +23,7 @@ namespace Tawala.Application.Models.NotificationDTO
     }
     public class ClientNotificationUpdateDTOS : IMapFrom<ClientNotification>
     {
+        public Guid Id { get; set; }
         public bool IsApprovedByAdmin { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
