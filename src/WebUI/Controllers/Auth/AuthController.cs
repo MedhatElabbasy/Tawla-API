@@ -27,6 +27,7 @@ using Tawala.Application.Services.TimeCode;
 using Tawala.Application.Common.MessageService;
 using Tawala.Infrastructure.Common.Models;
 using static IdentityServer4.Models.IdentityResources;
+using Tawala.Application.Models.ServiceProviderDTO;
 
 namespace Tawala.WebUI.Controllers.Auth
 {
@@ -92,6 +93,8 @@ namespace Tawala.WebUI.Controllers.Auth
                         await GenerateTotpCode(model.PhoneNumer, model.Email, createdUser.Id);
                         var newRes = mapper.Map<AppUserResDTO>(createdUser);
                         newRes.IsActive = false;
+
+
                         return mapper.Map<AppUserResDTO>(createdUser);
 
                     }
@@ -395,12 +398,14 @@ namespace Tawala.WebUI.Controllers.Auth
 
             var res = await context.Users.Where(x => x.Id == Id.ToString()).
                                     Include(x => x.Photo).
+
                                     FirstOrDefaultAsync();
 
             var photo = await context.AppAttachment.Where(x => x.Id == res.PhotoId).FirstOrDefaultAsync();
             res.Photo = photo;
-
-            return mapper.Map<AppUserResDTO>(res);
+            var newresult = mapper.Map<AppUserResDTO>(res);
+            newresult.Restaurant = mapper.Map<RestaurantResDTO>(await context.Restaurants.Where(x => x.Id == res.UserRestaurantId).FirstOrDefaultAsync());
+            return newresult;
         }
 
         private async Task<string[]> GenerateTotpCode(string phoneNumber, string email, string aspnetuserId)

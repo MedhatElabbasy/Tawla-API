@@ -27,6 +27,7 @@ namespace Tawala.Domain.Entities.Identity
         public AppAttachment Photo { get; set; }
         //---
         public Guid? UserRestaurantId { get; set; }
+         
 
     }
 }
