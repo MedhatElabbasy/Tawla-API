@@ -148,7 +148,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
                 Include(x => x.Logo).
                 Include(x => x.OpenDayes.Where(x => x.IsDeleted == false)).
                 Include(x => x.RestaurantType).
-                ToListAsync();
+                FirstOrDefaultAsync();
             return mapper.Map<RestaurantResDTO>(res);
         }
     }
