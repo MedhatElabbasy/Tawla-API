@@ -67,7 +67,7 @@ namespace Tawala.WebUI.Controllers.Auth
 
         [HttpPost]
         [Route("RegisterAdmin")]
-        public async Task<AppUserDTO> RegisterAdmin(AppUserDTO model)
+        public async Task<AppUserResDTO> RegisterAdmin(AppUserDTO model)
         {
             //check if user is found
             var user = await identityService.GetUserByUserNameAsync(model.Email);
@@ -90,13 +90,13 @@ namespace Tawala.WebUI.Controllers.Auth
                     if (model.IsUser)
                     {
                         await GenerateTotpCode(model.PhoneNumer, model.Email, createdUser.Id);
-                        var newRes = mapper.Map<AppUserDTO>(createdUser);
+                        var newRes = mapper.Map<AppUserResDTO>(createdUser);
                         newRes.IsActive = false;
-                        return mapper.Map<AppUserDTO>(createdUser);
+                        return mapper.Map<AppUserResDTO>(createdUser);
 
                     }
 
-                    return mapper.Map<AppUserDTO>(createdUser);
+                    return mapper.Map<AppUserResDTO>(createdUser);
                 }
                 else
                 {
@@ -151,6 +151,8 @@ namespace Tawala.WebUI.Controllers.Auth
 
             if (user.IsActive == false && user.IsUser)
             {
+
+                await GenerateTotpCode(user.PhoneNumer, user.Email, user.Id);
                 return Ok(new
                 {
                     message = "تم ارسال كود التحقق علي الميل ورقم الجوال الخاص بك"

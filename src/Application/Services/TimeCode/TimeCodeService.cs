@@ -31,7 +31,7 @@ namespace Tawala.Application.Services.TimeCode
         public async Task<string> AddTimeCode(TempCode timeCode)
         {
             //drop old code
-            await repository.ExecuteSql("delete from TempCodes where AppUserId='" + timeCode.AppUserId + "'");
+            await repository.ExecuteSql("delete from TempCode where AppUserId='" + timeCode.AppUserId + "'");
             //getnerate code
             var code = GenerateTimeCode();
             //Encrypt code
@@ -75,7 +75,7 @@ namespace Tawala.Application.Services.TimeCode
                 if (DateTime.Now.IsBewteenTwoDates(encryptedTimeCode.CreatedAt, encryptedTimeCode.ExpiredAt))
                 {
                     //drop old code
-                    await repository.ExecuteSql("delete from TempCodes where AppUserId='" + aspNetUser + "'");
+                    await repository.ExecuteSql("delete from TempCode where AppUserId='" + aspNetUser + "'");
                     return 1;
                 }
                 else
