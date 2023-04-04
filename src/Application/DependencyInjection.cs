@@ -14,6 +14,8 @@ using Takid.Application.Services.Common.Service;
 using Tawala.Application.Services.UsersService;
 using Tawala.Application.Common.NotificationService;
 using Tawala.Application.Services.AuthService;
+using Tawala.Application.Services.TimeCode;
+using Tawala.Application.Common.MessageService;
 
 namespace Tawala.Application
 {
@@ -39,6 +41,8 @@ namespace Tawala.Application
             services.AddScoped<IUploadFileService, UploadFileService>();
             services.AddScoped<IAttachmentService, AttachmentService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<ITimeCodeService, TimeCodeService>();
+            services.AddScoped<ISMSService, SMSService>();
 
             //---------------User Service------------
 

@@ -75,6 +75,7 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<RestCommissionConfig> RestCommissionConfigs { get; set; }
         public DbSet<Evaluation> Evaluations { get; set; }
         public DbSet<ClientNotification> ClientNotifications { get; set; }
+        public DbSet<TempCode> TempCode { get; set; }
 
 
 

@@ -23,6 +23,10 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Office.Interop.Word;
 using System.Collections.Generic;
+using Tawala.Application.Services.TimeCode;
+using Tawala.Application.Common.MessageService;
+using Tawala.Infrastructure.Common.Models;
+using static IdentityServer4.Models.IdentityResources;
 
 namespace Tawala.WebUI.Controllers.Auth
 {
@@ -35,6 +39,9 @@ namespace Tawala.WebUI.Controllers.Auth
         private readonly IAuthService authService;
         private readonly IMailService mailService;
         private readonly IConfiguration configuration;
+        private readonly ITimeCodeService timeCodeService;
+
+        private readonly ISMSService _sMSService;
         public AuthController(
             ApplicationDbContext context,
             IMapper mapper,
@@ -42,16 +49,20 @@ namespace Tawala.WebUI.Controllers.Auth
 ,
             IIdentityService identityService,
             IAuthService authService,
+            ITimeCodeService timeCodeService,
             Application.Common.SendEmail.IMailService mailService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            ISMSService sMSService)
         {
             this.context = context;
             this.mapper = mapper;
             _userManager = userManager;
             this.identityService = identityService;
             this.authService = authService;
+            this.timeCodeService = timeCodeService;
             this.mailService = mailService;
             this.configuration = configuration;
+            _sMSService = sMSService;
         }
 
         [HttpPost]
@@ -66,13 +77,25 @@ namespace Tawala.WebUI.Controllers.Auth
 
                 var newUser = mapper.Map<AppUser>(model);
                 newUser.UserName = model.Email;
+                if (model.IsUser)
+                {
+                    newUser.IsActive = false;
+                }
                 var result = await _userManager.CreateAsync(newUser, model.Password);
+
                 if (result.Succeeded)
                 {
 
                     var createdUser = await identityService.GetUserByUserNameAsync(model.Email);
+                    if (model.IsUser)
+                    {
+                        await GenerateTotpCode(model.PhoneNumer, model.Email, createdUser.Id);
+                        var newRes = mapper.Map<AppUserDTO>(createdUser);
+                        newRes.IsActive = false;
+                        return mapper.Map<AppUserDTO>(createdUser);
 
-           
+                    }
+
                     return mapper.Map<AppUserDTO>(createdUser);
                 }
                 else
@@ -86,12 +109,55 @@ namespace Tawala.WebUI.Controllers.Auth
             }
         }
 
+
+
+        //[HttpPost]
+        //[Route("RegisterUser")]
+        //public async Task<AppUserDTO> RegisterUser(AppUserDTO model)
+        //{
+        //    //check if user is found
+        //    var user = await identityService.GetUserByUserNameAsync(model.PhoneNumer);
+        //    if (user == null)
+        //    {
+        //        //create new User
+
+        //        var newUser = mapper.Map<AppUser>(model);
+        //        newUser.UserName = model.PhoneNumer;
+        //        var result = await _userManager.CreateAsync(newUser, "Takid#2022");
+        //        if (result.Succeeded)
+        //        {
+
+        //            var createdUser = await identityService.GetUserByUserNameAsync(model.PhoneNumer);
+
+        //            return mapper.Map<AppUserDTO>(createdUser);
+        //        }
+        //        else
+        //        {
+        //            throw new GlobalException(exMessage: RequestUtility.IsArabic ? "حدث خطأ" : "An error occurred");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new GlobalException(exMessage: RequestUtility.IsArabic ? "هذا المستخدم موجود من قبل" : "This user already exists");
+        //    }
+        //}
+
         [HttpPost]
         [Route("LoginAdmin")]
         public async Task<ActionResult> LoginAdmin(string userName, string password)
         {
             var user = await identityService.GetUserByUserNameAsync(userName);
 
+
+            if (user.IsActive == false && user.IsUser)
+            {
+                return Ok(new
+                {
+                    message = "تم ارسال كود التحقق علي الميل ورقم الجوال الخاص بك"
+
+                });
+
+            }
             if (user != null)
             {
                 var validCredentials = await _userManager.CheckPasswordAsync(user, password);
@@ -110,6 +176,38 @@ namespace Tawala.WebUI.Controllers.Auth
                 {
                     throw new GlobalException(exMessage: RequestUtility.IsArabic ? " اسم المستخدم او كلمة المرور غير صحيحة" : "The username or password is incorrect");
                 }
+            }
+            else
+            {
+                throw new GlobalException(exMessage: RequestUtility.IsArabic ? " اسم المستخدم او كلمة المرور غير صحيحة" : "The username or password is incorrect");
+            }
+        }
+
+
+        [HttpPost]
+        [Route("LoginUser")]
+        public async Task<ActionResult> LoginUser(string userName)
+        {
+            var user = await identityService.GetUserByUserNameAsync(userName);
+
+            if (user != null)
+            {
+                //var validCredentials = await _userManager.FindByEmailAsync(user );
+                //if (validCredentials)
+                //{
+
+                var token = await authService.GenerateAuthorizationTokenAsync(user);
+                return Ok(new
+                {
+                    user = mapper.Map<AppUserResDTO>(user),
+                    token = token,
+                    restaurant = await context.Restaurants.Where(x => x.Id == user.UserRestaurantId).FirstOrDefaultAsync(),
+                });
+                //}
+                //else
+                //{
+                //    throw new GlobalException(exMessage: RequestUtility.IsArabic ? " اسم المستخدم او كلمة المرور غير صحيحة" : "The username or password is incorrect");
+                //}
             }
             else
             {
@@ -303,5 +401,117 @@ namespace Tawala.WebUI.Controllers.Auth
             return mapper.Map<AppUserResDTO>(res);
         }
 
+        private async Task<string[]> GenerateTotpCode(string phoneNumber, string email, string aspnetuserId)
+        {
+
+            //new code 
+            var newCode = await timeCodeService.AddTimeCode(new TempCode() { AppUserId = aspnetuserId });
+
+
+            try
+            {
+                if (phoneNumber != "")
+                {
+                    await _sMSService.SendMessageAsync(new SmsModel()
+                    {
+                        Msg = "Your Tawala verification code is " + newCode,
+                        Numbers = phoneNumber
+                    });
+                }
+                else if (email != "")
+                {
+                    //send email
+                    await mailService.SendEmailAsync(new MailRequest()
+                    {
+                        Body = " كود التحقق الخاص بك " + newCode,
+                        ToEmail = email,
+                        Subject = "كود التحقق",
+                    });
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new GlobalException(exMessage: "حدث خطأ في إرسال الرسالة");
+            }
+            return new string[] { newCode, "" };
+
+        }
+
+
+        //private async Task<int> VerifyTotpCode(string code, string appUserId)
+        //{
+        //    var res = await timeCodeService.Validation(code, aspNetUser: appUserId);
+        //    return res;
+        //}
+
+
+        //private async Task<int> VerifyTotpCode2(string code, string appUserId)
+        //{
+        //    var res = await timeCodeService.Validation(code, aspNetUser: appUserId);
+        //    return res;
+        //}
+
+
+
+
+        [HttpPost]
+        [Route("VerifyTotpCode")]
+        public async Task<IActionResult> VerifyTotpCode(string code, string appUserId)
+        {
+
+
+            var user = await identityService.GetUserByIdAsync(appUserId);
+
+            var res2 = await timeCodeService.Validation(code, user.Id);
+            switch (res2)
+            {
+                case -2:
+                    return BadRequest(new
+                    {
+                        Success = 1,
+                        Message = RequestUtility.IsArabic ? "كود التحقق غير صحيح" : "Invalid verification code",
+                        status = "error"
+                    });
+                case -1:
+                    return BadRequest(new
+                    {
+                        Success = 1,
+                        Message = RequestUtility.IsArabic ? "كود التحقق انتهت صلاحيته" : "Verification code has expired",
+                        status = "error"
+                    });
+                case 0:
+                    return BadRequest(new
+                    {
+                        Success = 1,
+                        Message = RequestUtility.IsArabic ? "كود التحقق انتهت صلاحيته" : "Verification code has expired",
+                        status = "error"
+                    });
+                case 1:
+
+                    user.IsActive = true;
+
+                    var res = context.Users.Update(user);
+                    await context.SaveChangesAsync();
+
+                    var token = await authService.GenerateAuthorizationTokenAsync(user);
+                    return Ok(new
+                    {
+                        user = mapper.Map<AppUserResDTO>(user),
+                        token = token,
+                        restaurant = await context.Restaurants.Where(x => x.Id == user.UserRestaurantId).FirstOrDefaultAsync(),
+                    });
+
+                default:
+                    break;
+            }
+            return Ok(new
+            {
+                message = ""
+            });
+        }
     }
 }
