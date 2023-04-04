@@ -80,6 +80,17 @@ namespace Tawala.WebUI.Controllers.Admin.Notifications
             return mapper.Map<ClientNotificationResDTOS>(res);
         }
 
+        [HttpGet]
+        [Route("GetAllByResId")]
+        public async Task<List<ClientNotificationResDTOS>> GetAllByResId(Guid Resid)
+        {
+            var res = await context.ClientNotifications.Where(x => x.IsDeleted == false && x.RestaurantId == Resid).
+
+                Include(x => x.NotificationPhoto).
+                ToListAsync();
+            return mapper.Map<List<ClientNotificationResDTOS>>(res);
+        }
+
 
     }
 }

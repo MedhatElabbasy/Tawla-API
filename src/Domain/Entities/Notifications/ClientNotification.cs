@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Tawala.Domain.Common;
 using Tawala.Domain.Entities.Settings;
+using Tawala.Domain.Entities.Settings.ServiceProvider;
 
 namespace Tawala.Domain.Entities.Notifications
 {
@@ -19,5 +20,7 @@ namespace Tawala.Domain.Entities.Notifications
         public string DescriptionEn { get; set; }
         public Guid? NotificationPhotoId { get; set; }
         public AppAttachment NotificationPhoto { get; set; }
+        public Guid? RestaurantId { get; set; }
+        public Restaurant Restaurant { get; set; }
     }
 }

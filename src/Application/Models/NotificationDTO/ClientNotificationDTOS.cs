@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using Tawala.Application.Common.DateTimeCalculation;
 using Tawala.Application.Common.Mappings;
 using Tawala.Application.Models.Common;
+using Tawala.Application.Models.ServiceProviderDTO;
 using Tawala.Domain.Entities.Notifications;
 using Tawala.Domain.Entities.Settings;
+using Tawala.Domain.Entities.Settings.ServiceProvider;
 
 namespace Tawala.Application.Models.NotificationDTO
 {
@@ -19,6 +21,7 @@ namespace Tawala.Application.Models.NotificationDTO
         public string TitleEn { get; set; }
         public string DescriptionEn { get; set; }
         public Guid? NotificationPhotoId { get; set; }
+        public Guid? RestaurantId { get; set; } 
 
     }
     public class ClientNotificationUpdateDTOS : IMapFrom<ClientNotification>
@@ -30,7 +33,7 @@ namespace Tawala.Application.Models.NotificationDTO
         public string TitleEn { get; set; }
         public string DescriptionEn { get; set; }
         public Guid? NotificationPhotoId { get; set; }
-
+        public Guid? RestaurantId { get; set; } 
     }
 
     public class ClientNotificationResDTOS : IMapFrom<ClientNotification>
@@ -47,5 +50,7 @@ namespace Tawala.Application.Models.NotificationDTO
         public DateTime Created { get; set; }
         public string CreatedDateTime { get { return Created.ToString("MM dddd yyyy"); } }
         public string CreatedSinceTime { get { return Created.ToRelativeDateString(true); } }
+        public Guid? RestaurantId { get; set; }
+        public RestaurantResDTO Restaurant { get; set; }
     }
 }
