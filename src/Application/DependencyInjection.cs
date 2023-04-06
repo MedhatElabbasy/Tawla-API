@@ -16,6 +16,7 @@ using Tawala.Application.Common.NotificationService;
 using Tawala.Application.Services.AuthService;
 using Tawala.Application.Services.TimeCode;
 using Tawala.Application.Common.MessageService;
+using Takid.Application.Services;
 
 namespace Tawala.Application
 {
@@ -47,6 +48,7 @@ namespace Tawala.Application
             //---------------User Service------------
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<JwtHandler>();
 
             return services;
