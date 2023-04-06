@@ -51,9 +51,9 @@ namespace Tawala.WebUI.Controllers.MenuControllers
         {
             var productInDb = await context.Items
                             .SingleOrDefaultAsync(s => s.Id == Id && s.IsDeleted == false);
-            productInDb.IsDeleted = true; 
+            productInDb.IsDeleted = true;
             return await context.SaveChangesAsync() > 0;
-             
+
         }
 
         [HttpGet]
@@ -63,6 +63,7 @@ namespace Tawala.WebUI.Controllers.MenuControllers
             var res = await context.Items.Where(x => x.IsDeleted == false && x.RestaurantId == resId).
                 Include(x => x.Restaurant).
                 Include(x => x.Category).
+                Include(x => x.Photo).
                 ToListAsync();
             return mapper.Map<List<ItemsResDTO>>(res);
         }
@@ -74,6 +75,7 @@ namespace Tawala.WebUI.Controllers.MenuControllers
             var res = await context.Items.Where(x => x.IsDeleted == false && x.RestaurantId == resId && x.CategoryId == catId).
                 Include(x => x.Restaurant).
                 Include(x => x.Category).
+                Include(x => x.Photo).
                 ToListAsync();
             return mapper.Map<List<ItemsResDTO>>(res);
         }

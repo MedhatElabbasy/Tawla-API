@@ -20,6 +20,7 @@ using Tawala.Domain.Entities.TawalhDesignWithConfig;
 using Tawala.Domain.Entities.Reservations;
 using System.Reflection.Emit;
 using Tawala.Domain.Entities.Settings.EvaluationEN;
+using Tawala.Domain.Entities.Orders;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -76,6 +77,13 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<Evaluation> Evaluations { get; set; }
         public DbSet<ClientNotification> ClientNotifications { get; set; }
         public DbSet<TempCode> TempCode { get; set; }
+        //--------------
+        public DbSet<Orders> Orders { get; set; }
+        public DbSet<OrderItems> OrderItems { get; set; }
+        public DbSet<Favorite> Favorite { get; set; }
+        public DbSet<Offers> Offers { get; set; }
+
+
 
 
 
@@ -133,7 +141,7 @@ namespace Tawala.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
+
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             base.OnModelCreating(builder);

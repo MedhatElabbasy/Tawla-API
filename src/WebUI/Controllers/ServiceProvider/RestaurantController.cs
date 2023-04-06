@@ -17,7 +17,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
     public class RestaurantController : ApiControllerBase
     {
         private readonly ApplicationDbContext context;
-      
+
         private readonly IMapper mapper;
         public RestaurantController(ApplicationDbContext context, IMapper mapper)
         {
