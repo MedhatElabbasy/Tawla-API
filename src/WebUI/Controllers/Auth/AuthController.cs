@@ -392,6 +392,19 @@ namespace Tawala.WebUI.Controllers.Auth
 
 
         [HttpGet]
+        [Route("GetAllUser")]
+        public async Task<List<AppUserResDTO>> GetAllUser()
+        {
+
+            var res = await context.Users.Where(x => x.IsUser).
+                                    Include(x => x.Photo).
+                                    ToListAsync();
+
+            return mapper.Map<List<AppUserResDTO>>(res);
+        }
+
+
+        [HttpGet]
         [Route("GetById")]
         public async Task<AppUserResDTO> GetById(Guid Id)
         {
