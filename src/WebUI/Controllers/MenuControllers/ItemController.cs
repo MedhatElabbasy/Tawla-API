@@ -69,6 +69,18 @@ namespace Tawala.WebUI.Controllers.MenuControllers
         }
 
         [HttpGet]
+        [Route("GetById")]
+        public async Task<ItemsResDTO> GetById(Guid Id)
+        {
+            var res = await context.Items.Where(x => x.IsDeleted == false && x.RestaurantId == Id).
+                Include(x => x.Restaurant).
+                Include(x => x.Category).
+                Include(x => x.Photo).
+                FirstOrDefaultAsync();
+            return mapper.Map<ItemsResDTO>(res);
+        }
+
+        [HttpGet]
         [Route("GetAllByRestIdandCategory")]
         public async Task<List<ItemsResDTO>> GetAllByRestIdandCategory(Guid resId, Guid catId)
         {
