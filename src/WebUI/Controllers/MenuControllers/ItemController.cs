@@ -72,7 +72,7 @@ namespace Tawala.WebUI.Controllers.MenuControllers
         [Route("GetById")]
         public async Task<ItemsResDTO> GetById(Guid Id)
         {
-            var res = await context.Items.Where(x => x.IsDeleted == false && x.RestaurantId == Id).
+            var res = await context.Items.Where(x => x.IsDeleted == false && x.Id == Id).
                 Include(x => x.Restaurant).
                 Include(x => x.Category).
                 Include(x => x.Photo).

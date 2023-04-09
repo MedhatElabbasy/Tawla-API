@@ -22,6 +22,7 @@ using System.Reflection.Emit;
 using Tawala.Domain.Entities.Settings.EvaluationEN;
 using Tawala.Domain.Entities.Orders;
 using Tawala.Domain.Entities.Country;
+using Tawala.Domain.Entities.Settings.ResEvaluation;
 
 namespace Tawala.Infrastructure.Persistence
 {
@@ -84,6 +85,7 @@ namespace Tawala.Infrastructure.Persistence
         public DbSet<Favorite> Favorite { get; set; }
         public DbSet<Offers> Offers { get; set; }
         public DbSet<Country> Country { get; set; }
+        public DbSet<ResEvaluation> ResEvaluations { get; set; }
 
 
 

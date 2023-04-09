@@ -123,7 +123,7 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
         public async Task<List<RestaurantResDTO>> GetAll()
         {
             var res = await context.Restaurants.
-                Where(x => x.IsDeleted == false).
+                Where(x => x.IsDeleted == false && x.IsActive == true).
                 Include(x => x.AppBaner).
                 Include(x => x.City).
                 Include(x => x.Branchs.Where(x => x.IsDeleted == false)).
@@ -133,6 +133,36 @@ namespace Tawala.WebUI.Controllers.ServiceProvider
                 Include(x => x.RestaurantType).
                 ToListAsync();
             return mapper.Map<List<RestaurantResDTO>>(res);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllActiveWithRate")]
+        public async Task<List<RestaurantResWitRateDTO>> GetAllActiveWithRate()
+        {
+            var res = await context.Restaurants.
+                Where(x => x.IsDeleted == false && x.IsActive == true).
+                Include(x => x.AppBaner).
+                Include(x => x.City).
+                Include(x => x.Branchs.Where(x => x.IsDeleted == false)).
+                Include(x => x.District).
+                Include(x => x.Logo).
+                Include(x => x.OpenDayes.Where(x => x.IsDeleted == false)).
+                Include(x => x.RestaurantType).
+                ToListAsync();
+
+            var finalres = mapper.Map<List<RestaurantResWitRateDTO>>(res);
+            for (int i = 0; i < finalres.Count; i++)
+            {
+                var sumrate = await context.ResEvaluations.Where(x => x.RestaurantId == res[i].Id).SumAsync(x => x.Rate);
+                var count = await context.ResEvaluations.Where(x => x.RestaurantId == res[i].Id).CountAsync();
+                if (count != 0)
+                {
+                    finalres[i].Rate = sumrate / count;
+                }
+            }
+
+            return finalres;
         }
 
         [HttpGet]
