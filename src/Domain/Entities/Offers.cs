@@ -23,6 +23,7 @@ namespace Tawala.Domain.Entities
         public DateTime EndDate { get; set; }
         public Guid? PhotoId { get; set; }
         public AppAttachment Photo { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public enum OfferType

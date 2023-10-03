@@ -22,6 +22,7 @@ namespace Tawala.Application.Models.OffersDTO
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public Guid? PhotoId { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class OffersUpdateDTO : IMapFrom<Offers>
@@ -37,6 +38,7 @@ namespace Tawala.Application.Models.OffersDTO
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public Guid? PhotoId { get; set; }
+        public bool IsActive { get; set; }
     }
 
     public class OffersResDTO : IMapFrom<Offers>
@@ -53,6 +55,7 @@ namespace Tawala.Application.Models.OffersDTO
         public string EndDate { get; set; }
         public Guid? PhotoId { get; set; }
         public AppAttachmentResDTO Photo { get; set; }
+        public bool IsActive { get; set; }
     }
 
 }

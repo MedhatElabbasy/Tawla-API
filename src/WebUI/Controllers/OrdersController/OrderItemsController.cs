@@ -35,7 +35,10 @@ namespace Tawala.WebUI.Controllers.OrderItemsController
 
             //check is take befor
             var OrderItems = await context.OrderItems
-                          .SingleOrDefaultAsync(s => s.ItemsId == model.ItemsId && s.IsDeleted == false && s.AppUserId == model.AppUserId);
+              .SingleOrDefaultAsync(s => s.ItemsId == model.ItemsId && s.IsDeleted == false
+                      && s.AppUserId == model.AppUserId
+                      && s.OrdersId == null
+              );
 
             if (OrderItems != null)
             {
@@ -88,7 +91,7 @@ namespace Tawala.WebUI.Controllers.OrderItemsController
         [Route("GetAllByUserId")]
         public async Task<List<OrderItemsResDTO>> GetAllByUserId(string userId)
         {
-            var res = await context.OrderItems.Where(x => x.IsDeleted == false && x.AppUserId == userId).
+            var res = await context.OrderItems.Where(x => x.IsDeleted == false && x.AppUserId == userId && x.OrdersId == null).
                 Include(x => x.Items).ThenInclude(x => x.Photo).
                 Include(x => x.Items).ThenInclude(x => x.Restaurant).ThenInclude(x => x.Logo).
                 ToListAsync();

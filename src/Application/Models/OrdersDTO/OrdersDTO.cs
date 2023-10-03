@@ -47,11 +47,12 @@ namespace Tawala.Application.Models.OrdersDTO
         public decimal TotalAftetrVat { get; set; }
         public decimal FinalPrice { get; set; }
         public Guid? OrderStatusId { get; set; }
+        public bool IsPaided { get; set; }
 
     }
     public class OrdersResDTO : IMapFrom<Orders>
     {
-        public Guid Id { get; set; } 
+        public Guid Id { get; set; }
         public int OrderNumber { get; set; }
         public string AppUserId { get; set; }
         public AppUserResDTO AppUser { get; set; }
@@ -59,7 +60,7 @@ namespace Tawala.Application.Models.OrdersDTO
         public OffersResDTO Offers { get; set; }
         public Guid? RestaurantId { get; set; }
         public RestaurantResDTO Restaurant { get; set; }
-        public virtual IList<OrderItems> OrderItems { get; set; } = new List<OrderItems>();
+        public virtual IList<OrderItemsResDTO> OrderItems { get; set; } = new List<OrderItemsResDTO>();
         public decimal Totalprice { get; set; }
         public decimal TotalDiscount { get; set; }
         public decimal TotalAfterDiscount { get; set; }
@@ -68,5 +69,6 @@ namespace Tawala.Application.Models.OrdersDTO
         public decimal FinalPrice { get; set; }
         public Guid? OrderStatusId { get; set; }
         public OptionSetItemResDTO OrderStatus { get; set; }
+        public bool IsPaided { get; set; }
     }
 }

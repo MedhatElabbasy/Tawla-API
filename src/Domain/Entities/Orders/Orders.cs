@@ -36,7 +36,8 @@ namespace Tawala.Domain.Entities.Orders
         public string Lat { get; set; }
         public string Long { get; set; }
         public string AddressDetails { get; set; }
-
+        public bool IsPaided { get; set; }
+     
 
     }
 }
