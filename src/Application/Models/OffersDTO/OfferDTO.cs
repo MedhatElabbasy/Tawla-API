@@ -56,6 +56,8 @@ namespace Tawala.Application.Models.OffersDTO
         public Guid? PhotoId { get; set; }
         public AppAttachmentResDTO Photo { get; set; }
         public bool IsActive { get; set; }
+
+
     }
 
 }
